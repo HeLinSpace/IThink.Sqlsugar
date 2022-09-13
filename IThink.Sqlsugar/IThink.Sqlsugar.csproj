@@ -7,6 +7,7 @@
     <Authors>helin</Authors>
     <Description>基于ORM Sqlsugar进行二次封装</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/HeLinSpace/IThink.Sqlsugar</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

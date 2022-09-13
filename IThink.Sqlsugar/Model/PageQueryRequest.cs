@@ -1,51 +1,54 @@
-﻿namespace IThink.Sqlsugar;
-
-/// <summary>
-/// 分页查询模型
-/// </summary>
-public class PageQueryRequest
+﻿namespace IThink.Sqlsugar
 {
+
     /// <summary>
-    /// 分页大小
+    /// 分页查询模型
     /// </summary>
-    private int _pageSize = 20;
-    public int PageSize
+    public class PageQueryRequest
     {
-        get { return this._pageSize; }
-        set
+        /// <summary>
+        /// 分页大小
+        /// </summary>
+        private int _pageSize = 20;
+        public int PageSize
         {
-            if (value != 0)
+            get { return this._pageSize; }
+            set
             {
-                this._pageSize = value;
+                if (value != 0)
+                {
+                    this._pageSize = value;
+                }
+            }
+        }
+
+        private int _pageNumber = 1;
+
+        /// <summary>
+        /// 当前页码
+        /// </summary>
+        public int PageNumber
+        {
+            get { return this._pageNumber; }
+            set
+            {
+                if (value != 0)
+                {
+                    this._pageSize = value;
+                }
             }
         }
     }
 
-    private int _pageNumber = 1;
-
     /// <summary>
-    /// 当前页码
+    /// 分页查询模型
     /// </summary>
-    public int PageNumber
+    public class PageQueryRequest<T> : PageQueryRequest
     {
-        get { return this._pageNumber; }
-        set
-        {
-            if (value != 0)
-            {
-                this._pageSize = value;
-            }
-        }
+        /// <summary>
+        /// 请求数据
+        /// </summary>
+        public T QueryData { get; set; }
     }
 }
 
-/// <summary>
-/// 分页查询模型
-/// </summary>
-public class PageQueryRequest<T> : PageQueryRequest
-{
-    /// <summary>
-    /// 请求数据
-    /// </summary>
-    public T QueryData { get; set; }
-}

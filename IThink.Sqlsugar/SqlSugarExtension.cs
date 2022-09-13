@@ -34,7 +34,7 @@ namespace IThink.Sqlsugar
                 {
                     if (redisConfig == null)
                     {
-                        throw new ArgumentNullException(typeof(RedisConfig).Name);
+                        throw new ArgumentNullException(nameof(RedisConfig));
                     }
 
                     var instance = new RedisCache(redisConfig);

@@ -34,7 +34,7 @@
             {
                 if (value != 0)
                 {
-                    this._pageSize = value;
+                    this._pageNumber = value;
                 }
             }
         }

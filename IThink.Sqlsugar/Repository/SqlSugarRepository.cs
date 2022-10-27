@@ -51,7 +51,7 @@ namespace IThink.Sqlsugar
         /// <summary>
         /// 上下文对象
         /// </summary>
-        private BaseSqlSugarClient DbContext { get; set; }
+        public BaseSqlSugarClient DbContext { get; private set; }
 
         /// <summary>
         /// 返回指定Db实例

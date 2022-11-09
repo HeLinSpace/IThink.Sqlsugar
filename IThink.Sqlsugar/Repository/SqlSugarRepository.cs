@@ -723,6 +723,24 @@ namespace IThink.Sqlsugar
         }
 
         /// <summary>
+        /// 对象更新
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="updateObj"></param>
+        /// <returns></returns>
+        public bool UpdateLock<TEntity>(TEntity updateObj) where TEntity : BaseEntity, new()
+        {
+            if (UseCache)
+            {
+                return DbContext.Updateable(updateObj).RemoveDataCache().ExecuteCommandWithOptLock(true) > 0;
+            }
+            else
+            {
+                return DbContext.Updateable(updateObj).ExecuteCommandWithOptLock(true) > 0;
+            }
+        }
+
+        /// <summary>
         /// 对象更新异步
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
@@ -741,6 +759,24 @@ namespace IThink.Sqlsugar
         }
 
         /// <summary>
+        /// 对象更新异步
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="updateObj"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateLockAsync<TEntity>(TEntity updateObj) where TEntity : BaseEntity, new()
+        {
+            if (UseCache)
+            {
+                return await DbContext.Updateable(updateObj).RemoveDataCache().ExecuteCommandWithOptLockAsync(true) > 0;
+            }
+            else
+            {
+                return await DbContext.Updateable(updateObj).ExecuteCommandWithOptLockAsync(true) > 0;
+            }
+        }
+
+        /// <summary>
         /// 对象更新忽略空值
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
@@ -755,6 +791,24 @@ namespace IThink.Sqlsugar
             else
             {
                 return DbContext.Updateable(updateObj).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommand() > 0;
+            }
+        }
+
+        /// <summary>
+        /// 对象更新忽略空值
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="updateObj"></param>
+        /// <returns></returns>
+        public bool UpdateLockIgnoreNull<TEntity>(TEntity updateObj) where TEntity : BaseEntity, new()
+        {
+            if (UseCache)
+            {
+                return DbContext.Updateable(updateObj).IgnoreColumns(ignoreAllNullColumns: true).RemoveDataCache().ExecuteCommandWithOptLock(true) > 0;
+            }
+            else
+            {
+                return DbContext.Updateable(updateObj).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandWithOptLock(true) > 0;
             }
         }
 
@@ -793,7 +847,6 @@ namespace IThink.Sqlsugar
                 return DbContext.Updateable(updateObjs).ExecuteCommand() > 0;
             }
         }
-
 
         /// <summary>
         /// 列表更新异步

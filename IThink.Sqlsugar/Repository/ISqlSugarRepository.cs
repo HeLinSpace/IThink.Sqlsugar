@@ -344,6 +344,14 @@ namespace IThink.Sqlsugar
         bool Update<TEntity>(TEntity updateObj) where TEntity : BaseEntity, new();
 
         /// <summary>
+        /// 对象更新
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="updateObj"></param>
+        /// <returns></returns>
+        bool UpdateLock<TEntity>(TEntity updateObj) where TEntity : BaseEntity, new();
+
+        /// <summary>
         /// 对象更新异步
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
@@ -352,12 +360,28 @@ namespace IThink.Sqlsugar
         Task<bool> UpdateAsync<TEntity>(TEntity updateObj) where TEntity : BaseEntity, new();
 
         /// <summary>
+        /// 对象更新异步
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="updateObj"></param>
+        /// <returns></returns>
+        Task<bool> UpdateLockAsync<TEntity>(TEntity updateObj) where TEntity : BaseEntity, new();
+
+        /// <summary>
         /// 对象更新忽略空值
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="updateObj"></param>
         /// <returns></returns>
         bool UpdateIgnoreNull<TEntity>(TEntity updateObj) where TEntity : BaseEntity, new();
+
+        /// <summary>
+        /// 对象更新忽略空值
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="updateObj"></param>
+        /// <returns></returns>
+        bool UpdateLockIgnoreNull<TEntity>(TEntity updateObj) where TEntity : BaseEntity, new();
 
         /// <summary>
         /// 列表更新
@@ -374,6 +398,14 @@ namespace IThink.Sqlsugar
         /// <param name="updateObjs"></param>
         /// <returns></returns>
         Task<bool> UpdateRangeAsync<TEntity>(TEntity[] updateObjs) where TEntity : BaseEntity, new();
+
+        /// <summary>
+        /// 列表更新
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="updateObjs"></param>
+        /// <returns></returns>
+        bool UpdateRange<TEntity>(List<TEntity> updateObjs) where TEntity : BaseEntity, new();
 
         /// <summary>
         /// 包装事务

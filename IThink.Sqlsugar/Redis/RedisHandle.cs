@@ -280,7 +280,7 @@ namespace IThink.Sqlsugar
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="entity"></param>
-        /// <param name="expiresIn"></param>
+        /// <param name="expirySeconds"></param>
         /// <returns></returns>
         public bool AddIfNotExist<T>(string key, T entity, int expirySeconds = -1)
         {
@@ -401,9 +401,11 @@ namespace IThink.Sqlsugar
         }
 
         /// <summary>
-        /// 将一组键值对写入一个hash。比如Dictionary<string,string>(){{"d1","1"},{"d2","2"}};，则生成的Hash存储是key为参数hashId，
-        /// 第一行field为d1，它的value是1，第二行field为d2，它的value是2。
         /// </summary>
+        /// <param name="hashId"></param>
+        /// <param name="keyValuePairs">将一组键值对写入一个hash。比如{{"d1","1"},{"d2","2"}};
+        /// 则生成的Hash存储是key为参数hashId，第一行field为d1，它的value是1，第二行field为d2，它的value是2。
+        /// </param>
         public void SetRangeInHash(string hashId, IEnumerable<KeyValuePair<string, string>> keyValuePairs)
         {
             using (RedisClient redisClient = GetRedisClient())

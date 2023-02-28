@@ -1,5 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
 using System;
@@ -15,9 +14,9 @@ namespace IThink.Sqlsugar
         /// 添加sqlSugar支持多数据库
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="configuration"></param>
+        /// <param name="option"></param>
+        /// <param name="redisConfig"></param>
         /// <param name="contextLifetime"></param>
-        /// <param name="section"></param>
         /// <returns></returns>
         public static IServiceCollection AddSqlSugar(this IServiceCollection services, SqlSugarConnectOption option, RedisConfig redisConfig = null, ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
         {
@@ -68,8 +67,8 @@ namespace IThink.Sqlsugar
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
+        /// <param name="connectOptions"></param>
         /// <param name="contextLifetime"></param>
-        /// <param name="section"></param>
         /// <returns></returns>
         public static IServiceCollection AddSqlSugar(this IServiceCollection services, RedisConfig configuration, List<SqlSugarConnectOption> connectOptions, ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
         {
@@ -175,9 +174,7 @@ namespace IThink.Sqlsugar
         /// 添加sqlSugar支持多数据库
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="configuration"></param>
         /// <param name="contextLifetime"></param>
-        /// <param name="section"></param>
         /// <returns></returns>
         private static IServiceCollection AddRepository(this IServiceCollection services, ServiceLifetime contextLifetime)
         {

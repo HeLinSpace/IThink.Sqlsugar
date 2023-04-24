@@ -9,7 +9,7 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageProjectUrl>https://github.com/HeLinSpace/IThink.Sqlsugar</PackageProjectUrl>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<Version>5.1.4.68-preview11</Version>
+		<Version>5.1.4.68-preview11.1</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -32,7 +32,7 @@
 		<PackageReference Include="ServiceStack.Redis" Version="6.3.0">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="SqlSugarCore" Version="5.1.4.68-preview11" PrivateAssets="All" />
+		<PackageReference Include="SqlSugarCore" Version="5.1.4.68-preview11"/>
 	</ItemGroup>
 
 	<ItemGroup>

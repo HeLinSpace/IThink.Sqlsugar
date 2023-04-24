@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace IThink.Sqlsugar
 {
 
-
     /// <summary>
     /// 
     /// </summary>
@@ -40,6 +39,7 @@ namespace IThink.Sqlsugar
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="sql"></param>
+        /// <param name="parameters"></param>
         /// <returns></returns>
         T SqlQueryObject<T>(string sql, IDictionary<string, object> parameters = null);
 
@@ -111,10 +111,12 @@ namespace IThink.Sqlsugar
         /// 分页查询
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
         /// <param name="page"></param>
         /// <param name="whereExpression"></param>
         /// <param name="orderByExpression"></param>
         /// <param name="orderByType"></param>
+        /// <param name="selectExpression"></param>
         /// <returns></returns>
         (List<TResult> list, int totalCount) GetPageList<TEntity, TResult>(PageQueryRequest page, Expression<Func<TEntity, bool>> whereExpression = null, Expression<Func<TEntity, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc, Expression<Func<TEntity, TResult>> selectExpression = null) where TEntity : BaseEntity, new() where TResult : class, new();
 
@@ -415,9 +417,21 @@ namespace IThink.Sqlsugar
         bool Tran(Action action);
 
         /// <summary>
+        /// 包装事务
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        Task<bool> TranAsync(Func<Task> action);
+
+        /// <summary>
         /// 事务开始
         /// </summary>
         void BeginTran();
+
+        /// <summary>
+        /// 事务开始
+        /// </summary>
+        Task BeginTranAsync();
 
         /// <summary>
         /// 事务提交
@@ -425,9 +439,19 @@ namespace IThink.Sqlsugar
         void CommitTran();
 
         /// <summary>
+        /// 事务提交
+        /// </summary>
+        Task CommitTranAsync();
+
+        /// <summary>
         /// 事务回滚
         /// </summary>
         void RollbackTran();
+
+        /// <summary>
+        /// 事务提交
+        /// </summary>
+        Task RollbackTranAsync();
 
         /// <summary>
         /// 删除表
@@ -1178,6 +1202,19 @@ namespace IThink.Sqlsugar
             where T8 : BaseEntity, new()
             where T9 : BaseEntity, new()
             where T10 : BaseEntity, new();
+
+        #endregion
+
+        #region Updateable
+
+        public IUpdateable<T> Updateable<T>(List<T> UpdateObjs) where T : class, new();
+        public IUpdateable<T> Updateable<T>() where T : class, new();
+        public IUpdateable<T> Updateable<T>(Dictionary<string, object> columnDictionary) where T : class, new();
+        public IUpdateable<T> Updateable<T>(dynamic updateDynamicObject) where T : class, new();
+        public IUpdateable<T> Updateable<T>(Expression<Func<T, T>> columns) where T : class, new();
+        public IUpdateable<T> Updateable<T>(T UpdateObj) where T : class, new();
+        public IUpdateable<T> Updateable<T>(T[] UpdateObjs) where T : class, new();
+        public IUpdateable<T> Updateable<T>(Expression<Func<T, bool>> columns) where T : class, new();
 
         #endregion
     }

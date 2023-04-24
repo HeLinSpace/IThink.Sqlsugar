@@ -40,12 +40,14 @@ namespace IThink.Sqlsugar
 
             UseCache = this.DbContext.UseCache;
 
+#if DEBUG
             DbContext.Aop.OnLogExecuting = (sql, pars) =>
             {
                 Console.WriteLine(sql + "\r\n" +
                     DbContext.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
                 Console.WriteLine();
             };
+#endif
         }
 
         /// <summary>
@@ -470,11 +472,11 @@ namespace IThink.Sqlsugar
         {
             if (UseCache)
             {
-                return await DbContext.Deleteable<TEntity>().In(id).RemoveDataCache().ExecuteCommandAsync<TEntity>() > 0;
+                return await DbContext.Deleteable<TEntity>().In(id).RemoveDataCache().ExecuteCommandAsync() > 0;
             }
             else
             {
-                return await DbContext.Deleteable<TEntity>().In(id).ExecuteCommandAsync<TEntity>() > 0;
+                return await DbContext.Deleteable<TEntity>().In(id).ExecuteCommandAsync() > 0;
             }
         }
 
@@ -890,11 +892,40 @@ namespace IThink.Sqlsugar
         }
 
         /// <summary>
+        /// 包装事务
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public async Task<bool> TranAsync(Func<Task> action)
+        {
+            try
+            {
+                await BeginTranAsync();
+                await action();
+                await CommitTranAsync();
+            }
+            catch (Exception ex)
+            {
+                await RollbackTranAsync();
+                throw ex;
+            }
+            return true;
+        }
+
+        /// <summary>
         /// 事务开始
         /// </summary>
         public void BeginTran()
         {
             DbContext.BeginTran();
+        }
+
+        /// <summary>
+        /// 事务开始
+        /// </summary>
+        public Task BeginTranAsync()
+        {
+            return DbContext.BeginTranAsync();
         }
 
         /// <summary>
@@ -906,11 +937,27 @@ namespace IThink.Sqlsugar
         }
 
         /// <summary>
+        /// 事务提交
+        /// </summary>
+        public Task CommitTranAsync()
+        {
+            return DbContext.CommitTranAsync();
+        }
+
+        /// <summary>
         /// 事务回滚
         /// </summary>
         public void RollbackTran()
         {
             DbContext.RollbackTran();
+        }
+
+        /// <summary>
+        /// 事务回滚
+        /// </summary>
+        public Task RollbackTranAsync()
+        {
+            return DbContext.RollbackTranAsync();
         }
 
         /// <summary>
@@ -931,6 +978,8 @@ namespace IThink.Sqlsugar
         }
 
         #region 重写基础方法
+
+        #region Queryable
 
         /// <summary>
         /// Queryable
@@ -1803,6 +1852,56 @@ namespace IThink.Sqlsugar
         {
             return DbContext.Queryable(joinExpression).WithCacheIF(UseCache);
         }
+
+        #endregion
+
+        #region Updateable
+
+        public IUpdateable<T> Updateable<T>(List<T> UpdateObjs) where T : class, new()
+        {
+            return DbContext.Updateable(UpdateObjs);
+        }
+
+        public IUpdateable<T> Updateable<T>() where T : class, new()
+        {
+            return DbContext.Updateable<T>();
+        }
+
+        public IUpdateable<T> Updateable<T>(Dictionary<string, object> columnDictionary) where T : class, new()
+        {
+            return DbContext.Updateable<T>(columnDictionary);
+        }
+
+        public IUpdateable<T> Updateable<T>(dynamic updateDynamicObject) where T : class, new()
+        {
+            return DbContext.Updateable<T>(updateDynamicObject);
+        }
+
+        public IUpdateable<T> Updateable<T>(Expression<Func<T, T>> columns) where T : class, new()
+        {
+            return DbContext.Updateable<T>(columns);
+        }
+
+        public IUpdateable<T> Updateable<T>(T UpdateObj) where T : class, new()
+        {
+            return DbContext.Updateable<T>(UpdateObj);
+        }
+
+        public IUpdateable<T> Updateable<T>(T[] UpdateObjs) where T : class, new()
+        {
+            return DbContext.Updateable<T>(UpdateObjs);
+        }
+
+        public IUpdateable<T> Updateable<T>(Expression<Func<T, bool>> columns) where T : class, new()
+        {
+            return DbContext.Updateable<T>(columns);
+        }
+
+        #endregion
+
+        #region Updateable
+
+        #endregion
 
         #endregion
 
